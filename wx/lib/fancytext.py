@@ -197,11 +197,10 @@ class Renderer:
         if attrs.keys():
             raise ValueError("<i> does not take attributes")
         font = self.getCurrentFont()
-        self.start_font({"size" : font.GetPointSize(),"style":"italic"})
+        self.start_font({"size" : font.GetPointSize(), "style" : "italic"})
 
     def end_i(self):
         self.fonts.pop()
-        self.offsets.pop()
 
     def start_sub(self, attrs):
         if attrs.keys():
