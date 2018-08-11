@@ -127,7 +127,7 @@ class Renderer:
             self.minY = self.maxY = self._y = self.dc.GetTextExtent("M")[1]
         return self._y
     def setY(self, value):
-        self._y = y
+        self._y = value
     y = property(getY, setY)
 
     def startElement(self, name, attrs):
@@ -192,6 +192,16 @@ class Renderer:
 
     def end_font(self):
         self.fonts.pop()
+        
+    def start_i(self, attrs):
+        if attrs.keys():
+            raise ValueError("<i> does not take attributes")
+        font = self.getCurrentFont()
+        self.start_font({"size" : font.GetPointSize(),"style":"italic"})
+
+    def end_i(self):
+        self.fonts.pop()
+        self.offsets.pop()
 
     def start_sub(self, attrs):
         if attrs.keys():
@@ -463,7 +473,7 @@ We can use doctest/guitest to display this string in all its marked up glory.
 >>> from guitest import PauseTests; PauseTests()
 
 </font></font>
-The End"""
+<i>The End</i>"""
 
     app = wx.App()
     box = wx.BoxSizer(wx.VERTICAL)
